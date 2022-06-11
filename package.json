@@ -1,5 +1,5 @@
 {
-  "name": "smurfless1-mkbranch",
+  "name": "smurfless-mkbranch",
   "version": "0.1.2",
   "description": "make branches for me",
   "main": "index.js",
