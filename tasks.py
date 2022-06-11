@@ -11,6 +11,11 @@ def publish(c):
 def build_only_local_platform(c):
     c.run("goreleaser build --single-target --rm-dist")
 
+@task
+def tag(c, version):
+    c.run(f"git tag v{version}")
+    c.run(f"git push origin v{version}")
+
 
 def get_field(c, name, field):
     c: Context
