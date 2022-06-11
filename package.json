@@ -1,6 +1,6 @@
 {
     "name": "smurfless-mkbranch",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "description": "make branches for me",
     "main": "index.js",
     "scripts": {
