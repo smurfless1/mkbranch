@@ -2,7 +2,6 @@
 vendor
 mkbranch
 *.test
-
-
-
+node_modules/
 dist/
+
