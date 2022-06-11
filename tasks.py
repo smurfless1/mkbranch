@@ -86,3 +86,9 @@ def bump_patch(c):
     updated = str(ver.bump_patch())
     # reminder: no v on the semver here
     tag(c, updated)
+
+
+@task(bump_patch, publish)
+def ship_patch(c):
+    """Bump a patch and release it."""
+    pass

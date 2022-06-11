@@ -2,7 +2,17 @@
 
 # Install
 
-This installs it in your existing go directory, if you have one.
+`npm install smurfless-mkbranch`
+
+and then later:
+
+`npm update smurfless-mkbranch`
+
+This installs a native go version on your platform but without all the compiler setup.
+
+## Optional install path
+
+If you have already set up a go compiler, you can use that instead by running this.
 
 `go install github.com/smurfless1/mkbranch@latest`
 
