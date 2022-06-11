@@ -1,4 +1,5 @@
 import json
+import semver
 
 from pathlib import Path
 from invoke import task
@@ -51,13 +52,24 @@ def publish(c):
     c.run(f'npm publish --otp {code}')
 
 
-@task
-def update_pj(c, version):
+def read_version():
+    with Path("package.json").open("r", encoding='utf-8') as pjhandle:
+        loaded = json.load(pjhandle)
+    # does not include the v
+    return loaded['version']
+
+
+def write_version(version):
     with Path("package.json").open("r", encoding='utf-8') as pjhandle:
         loaded = json.load(pjhandle)
         loaded['version'] = version
     with Path("package.json").open("w", encoding='utf-8') as pjhandle:
         pjhandle.write(json.dumps(loaded, indent=4))
+
+
+@task
+def update_pj(c, version):
+    write_version(version)
     c.run(f"git add package.json ; git commit -m 'Update npm version to v{version}'")
 
 
@@ -67,3 +79,10 @@ def tag(c, version):
     update_pj(c, version)
     c.run(f"git tag -a v{version} -m 'Version v{version}'")
 
+
+@task
+def bump_patch(c):
+    ver = semver.VersionInfo.parse(read_version())
+    updated = str(ver.bump_patch())
+    # reminder: no v on the semver here
+    tag(c, updated)
