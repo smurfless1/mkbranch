@@ -3,6 +3,36 @@ import json
 from pathlib import Path
 from invoke import task
 
+
+def get_field(c, name, field):
+    c: Context
+    result = c.run(f'op item get "{name}" --field label="{field}"', hide='both')
+    return result.stdout.strip()
+
+
+def get_username(c, name):
+    c: Context
+    result = c.run(f'op item get "{name}" --field label="username"', hide='both')
+    return result.stdout.strip()
+
+
+def get_password(c, name):
+    c: Context
+    result = c.run(f'op item get "{name}" --field label="password"', hide='both')
+    return result.stdout.strip()
+
+
+def get_otp(c, name):
+    c: Context
+    result = c.run(f'op item get "{name}" --otp', hide='both')
+    return result.stdout.strip()
+
+
+@task
+def build_only_local_platform(c):
+    c.run("goreleaser build --single-target --rm-dist")
+
+
 @task
 def prepublish(c):
     """Publish a prerelease"""
@@ -18,12 +48,8 @@ def publish(c):
     c.run(f'GITHUB_TOKEN="{token}" goreleaser release --rm-dist')
     # part 2: npm - update version, get OTP to clipboard, publish
     c.run('op item get "NPM registry" --otp | pbcopy')
-    c.run('npm publish')  # user has to paste for now
-
-
-@task
-def build_only_local_platform(c):
-    c.run("goreleaser build --single-target --rm-dist")
+    code = get_otp(c, "NPM registry")
+    c.run('npm publish --otp ')  # user has to paste for now
 
 
 @task
@@ -36,33 +62,8 @@ def update_pj(c, version):
     c.run(f"git add package.json ; git commit -m 'Update npm version to v{version}'")
 
 
-@task
+@task(update_pj)
 def tag(c, version):
     """State a release version"""
-    update_pj(c, version)
     c.run(f"git tag -a v{version} -m 'Version v{version}'")
-
-
-def get_field(c, name, field):
-    c: Context
-    result = c.run(f'op item get "{name}" --field label="{field}"', hide='both')
-    return result.stdout
-
-
-def get_username(c, name):
-    c: Context
-    result = c.run(f'op item get "{name}" --field label="username"', hide='both')
-    return result.stdout
-
-
-def get_password(c, name):
-    c: Context
-    result = c.run(f'op item get "{name}" --field label="password"', hide='both')
-    return result.stdout
-
-
-def get_otp(c, name):
-    c: Context
-    result = c.run(f'op item get "{name}" --otp', hide='both')
-    return result.stdout
 
