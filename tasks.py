@@ -47,9 +47,8 @@ def publish(c):
     token = get_field(c, "Github", "api token for goreleaser").strip()
     c.run(f'GITHUB_TOKEN="{token}" goreleaser release --rm-dist')
     # part 2: npm - update version, get OTP to clipboard, publish
-    c.run('op item get "NPM registry" --otp | pbcopy')
     code = get_otp(c, "NPM registry")
-    c.run('npm publish --otp ')  # user has to paste for now
+    c.run(f'npm publish --otp {code}')
 
 
 @task
@@ -62,8 +61,9 @@ def update_pj(c, version):
     c.run(f"git add package.json ; git commit -m 'Update npm version to v{version}'")
 
 
-@task(update_pj)
+@task
 def tag(c, version):
     """State a release version"""
+    update_pj(c, version)
     c.run(f"git tag -a v{version} -m 'Version v{version}'")
 
