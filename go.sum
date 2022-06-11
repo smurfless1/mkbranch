@@ -19,8 +19,6 @@ github.com/sirupsen/logrus v1.8.1 h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE
 github.com/sirupsen/logrus v1.8.1/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic61uBYv0=
 github.com/smurfless1/fancyrun v0.1.1 h1:htxGN8F+P/W6R0xMHrZwSesS7vlpbSdT7tAMtrNV8HE=
 github.com/smurfless1/fancyrun v0.1.1/go.mod h1:xPhliqyt32Se4osIjkREJG4tHMQn+F/HdlGuFrJ7aq4=
-github.com/smurfless1/gitlike v0.1.0 h1:d/NrZv0zuecTijniKsmqZ0LIqFUOJMSZjU6g0y3tNAQ=
-github.com/smurfless1/gitlike v0.1.0/go.mod h1:0mRsNk7ynGecIPKb6sjccIRPRFANBjhTJNBLTIlQxQs=
 github.com/smurfless1/gitlike v0.1.1 h1:4h8Xv/AAT9XBqFS+aGydwvvjayzb+WE9X97OZ376UnM=
 github.com/smurfless1/gitlike v0.1.1/go.mod h1:0mRsNk7ynGecIPKb6sjccIRPRFANBjhTJNBLTIlQxQs=
 github.com/smurfless1/pathlib v0.1.6 h1:xfueu8kl2YTh/xeV0P0fw1MOMAqYrn6nZt9Kp4ZsYpk=
