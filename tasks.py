@@ -3,13 +3,22 @@ import json
 from invoke import task
 
 @task
+def prepublish(c):
+    token = get_field(c, "Github", "api token for goreleaser").strip()
+    c.run(f'GITHUB_TOKEN="{token}" goreleaser release --snapshot --rm-dist')
+
+
+@task
 def publish(c):
     token = get_field(c, "Github", "api token for goreleaser").strip()
-    c.run(f'GITHUB_TOKEN="{token}" goreleaser release')
+    c.run(f'GITHUB_TOKEN="{token}" goreleaser release --rm-dist')
+    # part 2: npm - update version, get OTP to clipboard, publish
+
 
 @task
 def build_only_local_platform(c):
     c.run("goreleaser build --single-target --rm-dist")
+
 
 @task
 def tag(c, version):
