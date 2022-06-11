@@ -1,29 +1,29 @@
 {
-  "name": "smurfless-mkbranch",
-  "version": "0.1.4",
-  "description": "make branches for me",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "go-npm install",
-    "preuninstall": "go-npm uninstall"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/smurfless1/mkbranch.git"
-  },
-  "author": "business@smurfless.com",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/smurfless1/mkbranch/issues"
-  },
-  "homepage": "https://github.com/smurfless1/mkbranch#readme",
-  "dependencies": {
-    "go-npm": "github:jurassix/go-npm"
-  },
-  "goBinary": {
-    "name": "mkbranch",
-    "path": "./bin",
-    "url": "https://github.com/smurfless1/mkbranch/releases/download/v{{version}}/mkbranch_{{version}}_{{platform}}_{{arch}}.tar.gz"
-  }
+    "name": "smurfless-mkbranch",
+    "version": "0.1.6",
+    "description": "make branches for me",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "postinstall": "go-npm install",
+        "preuninstall": "go-npm uninstall"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/smurfless1/mkbranch.git"
+    },
+    "author": "business@smurfless.com",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/smurfless1/mkbranch/issues"
+    },
+    "homepage": "https://github.com/smurfless1/mkbranch#readme",
+    "dependencies": {
+        "go-npm": "github:jurassix/go-npm"
+    },
+    "goBinary": {
+        "name": "mkbranch",
+        "path": "./bin",
+        "url": "https://github.com/smurfless1/mkbranch/releases/download/v{{version}}/mkbranch_{{version}}_{{platform}}_{{arch}}.tar.gz"
+    }
 }
