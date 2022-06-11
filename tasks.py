@@ -65,11 +65,13 @@ def publish(c):
     c.run(f'npm publish --otp {code}')
 
 
-def read_version():
-    with Path("package.json").open("r", encoding='utf-8') as pjhandle:
-        loaded = json.load(pjhandle)
-    # does not include the v
-    return loaded['version']
+def read_version(c):
+    resp = c.run("git describe --tags --abbrev=0", hide='both')
+    tag = resp.stdout.strip()[1:]
+    if not tag or len(tag) < 1:
+        resp = c.run("git describe --abbrev=0", hide='both')
+        tag = resp.stdout.strip()[1:]
+    return tag
 
 
 def write_version(version):
@@ -95,7 +97,7 @@ def tag(c, version):
 
 @task
 def bump_patch(c):
-    ver = semver.VersionInfo.parse(read_version())
+    ver = semver.VersionInfo.parse(read_version(c))
     updated = str(ver.bump_patch())
     # reminder: no v on the semver here
     tag(c, updated)
