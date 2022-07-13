@@ -1,5 +1,6 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Package cmd
+Copyright © 2022 David Brown business@smurfless.com
 
 */
 package cmd
@@ -21,7 +22,7 @@ var username string
 var jira string
 var noDate bool
 
-func runBranch(cmd *cobra.Command, args []string) {
+func runBranch(_ *cobra.Command, args []string) {
 	// reduce noise
 	logrus.SetLevel(logrus.ErrorLevel)
 	branch := strings.Join(args, "-")

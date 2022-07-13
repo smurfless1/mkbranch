@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# install:
+# go install github.com/rantav/go-archetype@latest
+
+# usage:
+# go-archetype transform --transformations=transformations.yml --source=. --destination=../newcopy
+
+# testing:
+# rm -rf tmp && go-archetype transform --transformations=transformations.yml --source=. --destination=tmp -- --name bob --bin bob --author bob --owner bob --githubname bob --githubproject bob
+
+inputs:
+  - id: name
+    text: What is the project's npm name? (e.g. my-awesome-go-project)
+    type: text
+  - id: bin
+    text: What is the project's binary name? (e.g. mkbranch)
+    type: text
+  - id: author
+    text: What is your email address for npm?
+    type: text
+  - id: owner
+    text: What is your copyright owner name? (e.g. Chuck Norris)
+    type: text
+  - id: githubname
+    text: What is your github nickname? (e.g. cnorris for Chuck Norris)
+    type: text
+  - id: githubproject
+    text: What is your github project name? (e.g. mkbranch in git+https://github.com/smurfless1/mkbranch.git)
+    type: text
+
+transformations:
+  - name: do not copy some files
+    type: include
+    condition: false
+    files: [ ".git", ".DS_Store", ".idea", ".vscode" ]
+
+  - name: npm project name
+    type: replace # The type of the transformer is **replace**
+    pattern: smurfless-mkbranch # The text pattern to search and replace
+    replacement: "{{ .name }}" # The text to replace. You may use go templates and perform arbitrary replacements.
+    files: [ "*.go", "**/*.go", "**/*.sh", ".gitignore", "README.md", "Makefile", "transformations.yml" ]
+
+  - name: author
+    type: replace # The type of the transformer is **replace**
+    pattern: business@smurfless.com # The text pattern to search and replace
+    replacement: "{{ .author }}" # The text to replace. You may use go templates and perform arbitrary replacements.
+    files: [ "*.go", "**/*.go", "**/*.sh", ".gitignore", "README.md", "Makefile" , "transformations.yml"]
+
+  - name: owner full name
+    type: replace
+    pattern: Dave Brown
+    replacement: "{{ .owner }}"
+    files: [ "*.go", "**/*.go", "**/*.sh", ".gitignore", "README.md", "Makefile", "*.json" , "transformations.yml"]
+
+  - name: owner full name two
+    type: replace
+    pattern: David Brown
+    replacement: "{{ .owner }}"
+    files: [ "*.go", "**/*.go", "**/*.sh", ".gitignore", "README.md", "Makefile", "*.json" , "transformations.yml"]
+
+  - name: github user name
+    type: replace # The type of the transformer is **replace**
+    pattern: smurfless1/mkbranch
+    replacement: "{{ .githubname }}/{{ .bin }}"
+    # careful of which files get this replacement, some libs included are indeed provided by me
+    files: [ "root.go", "go.mod" , "transformations.yml"]
+
+  - name: github user namespace
+    type: replace
+    pattern: /smurfless1/
+    replacement: "/{{ .githubname }}/"
+    files: [ "main.go", "transformations.yml"]
+
+  - name: project binary name
+    type: replace # The type of the transformer is **replace**
+    pattern: mkbranch # The text pattern to search and replace
+    replacement: "{{ .bin }}" # The text to replace. You may use go templates and perform arbitrary replacements.
+    files: [ "*.go", "**/*.go", "**/*.sh", ".gitignore", "README.md", "Makefile" , "transformations.yml"]
+
+after:
+  operations:
+    - sh:
+        # - cd {{.destination}} && rm -rf .idea .git
+        - cd {{.destination}} && git init . && git add .gitignore .github .goreleaser.yaml * && git commit -m 'Initial copy'
