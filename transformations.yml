@@ -3,7 +3,7 @@
 # install:
 # go install github.com/rantav/go-archetype@latest
 
-# usage:
+# usage: why is it this complicated? sheesh.
 # go-archetype transform --transformations=transformations.yml --source=. --destination=../newcopy
 
 # testing:
